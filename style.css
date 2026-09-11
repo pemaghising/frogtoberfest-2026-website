@@ -625,7 +625,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   .enroll-step:not(:last-child)::after{ display:none; }
 }
 .registration-cta{ margin-top:40px; display:flex; align-items:center; gap:24px; flex-wrap:wrap; justify-content:space-between; border:2px solid var(--carbon); padding:32px; background:var(--paper); }
-.registration-cta .lede{ margin:0; max-width:44ch; }
+.registration-cta .lede{ margin:0; flex:1; }
 
 /* ==========================================================================
    Screen 09 — RESOURCES (field manual / FAQ)
