@@ -286,7 +286,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   line-height:1.65;
   color:var(--carbon);
 }
-.hero-cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:80px; }
+.hero-cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:40px; }
 
 .hero-art{
   position:absolute;
