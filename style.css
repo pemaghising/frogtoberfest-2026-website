@@ -281,7 +281,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 }
 .hero-logo{ display:block; width:100%; height:auto; }
 .hero-copy .lede{
-  max-width:40ch;
   margin-bottom:32px;
   font-size:19px;
   line-height:1.65;
