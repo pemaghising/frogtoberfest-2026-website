@@ -573,7 +573,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
    ========================================================================== */
 .recognition{ background:var(--surface); color:var(--on-dark); position:relative; }
 .recognition .blueprint-grid{ opacity:.4; }
-.recognition-inner{ position:relative; z-index:2; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:start; }
+.recognition-inner{ position:relative; z-index:2; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:stretch; }
 @media (max-width:1100px){ .recognition-inner{ grid-template-columns:1fr; } }
 
 .badge-list{ display:flex; flex-direction:column; gap:2px; }
