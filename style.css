@@ -702,7 +702,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   .enroll-step:nth-child(n+3){ border-top:2px solid var(--carbon); }
   .enroll-step:not(:last-child)::after{ display:none; }
 }
-.registration-cta{ margin-top:40px; display:flex; align-items:center; gap:24px; flex-wrap:wrap; justify-content:space-between; border:2px solid var(--carbon); padding:32px; background:var(--paper); }
+.registration-cta{ max-width:760px; margin-top:40px; display:flex; align-items:center; gap:24px; flex-wrap:wrap; justify-content:space-between; border:2px solid var(--carbon); padding:32px; background:var(--paper); }
 /* flex:1 keeps it filling the plate at typical widths (no orphaned-looking
    dead space now that the button that used to sit beside it is gone);
    max-width keeps the actual reading line under control on very wide
