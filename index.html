@@ -60,6 +60,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="style.css">
+<link rel="preload" as="image" href="IMG/hero-pilot-tall.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
 
@@ -91,7 +92,10 @@
     <div class="blueprint-grid" aria-hidden="true"></div>
     <div class="hero-figure">
       <span class="hero-annot" aria-hidden="true">UNIT&#8209;07 &middot; PILOT: HUMAN</span>
-      <img src="IMG/hero-pilot-tall.png" alt="Frog Mecha with its pilot seated on its shoulder">
+      <picture>
+        <source srcset="IMG/hero-pilot-tall.webp" type="image/webp">
+        <img src="IMG/hero-pilot-tall.png" alt="Frog Mecha with its pilot seated on its shoulder" width="935" height="1062" fetchpriority="high" decoding="async">
+      </picture>
     </div>
   </div>
 
