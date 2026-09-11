@@ -614,9 +614,9 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .enroll-step h3{ font-family:var(--font-heading); font-size:18px; margin:10px 0 8px; }
 .enroll-step p{ font-size:13.5px; line-height:1.5; }
 .enroll-step:not(:last-child)::after{
-  content:'→'; position:absolute; right:-11px; top:50%; transform:translateY(-50%);
-  font-family:var(--font-mono); font-size:14px; color:var(--carbon); background:var(--paper-dim);
-  width:22px; text-align:center; z-index:2;
+  content:'→'; position:absolute; right:-13px; top:50%; transform:translateY(-50%);
+  font-family:var(--font-mono); font-size:22px; font-weight:600; color:var(--carbon); background:var(--paper-dim);
+  width:26px; text-align:center; z-index:2;
 }
 @media (max-width:900px){
   .enroll-steps{ grid-template-columns:1fr 1fr; }
