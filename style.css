@@ -597,7 +597,11 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .guidelines{ background:var(--paper); }
 .doc-layout{ display:grid; grid-template-columns:260px 1fr; gap:56px; align-items:start; }
 @media (max-width:900px){ .doc-layout{ grid-template-columns:1fr; gap:32px; } }
-.doc-index{ position:sticky; top:104px; border:2px solid var(--carbon); }
+/* will-change hints the browser to promote this to its own compositor
+   layer, which is the standard mitigation for real-world position:sticky
+   scroll jank on some GPUs/browsers (not reproducible in automated
+   testing, but a safe, targeted fix for the known issue class). */
+.doc-index{ position:sticky; top:104px; border:2px solid var(--carbon); will-change:transform; }
 .doc-index a{
   display:block; padding:14px 18px; font-family:var(--font-mono); font-size:12px;
   letter-spacing:.06em; text-transform:uppercase; border-top:2px solid var(--carbon);
