@@ -319,7 +319,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .hero-annot{
   position:absolute;
   z-index:3;
-  left:162px; top:96px;
+  left:98px; top:96px;
   writing-mode:vertical-rl;
   font-family:var(--font-mono);
   font-size:11px; letter-spacing:.2em; text-transform:uppercase;
