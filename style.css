@@ -703,7 +703,11 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   .enroll-step:not(:last-child)::after{ display:none; }
 }
 .registration-cta{ margin-top:40px; display:flex; align-items:center; gap:24px; flex-wrap:wrap; justify-content:space-between; border:2px solid var(--carbon); padding:32px; background:var(--paper); }
-.registration-cta .lede{ margin:0; flex:1; }
+/* flex:1 keeps it filling the plate at typical widths (no orphaned-looking
+   dead space now that the button that used to sit beside it is gone);
+   max-width keeps the actual reading line under control on very wide
+   viewports, where flex:1 alone was stretching it past 140 characters. */
+.registration-cta .lede{ margin:0; flex:1; max-width:68ch; }
 
 /* ==========================================================================
    Screen 09 — RESOURCES (field manual / FAQ)
@@ -724,7 +728,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .faq:nth-child(9){ grid-column:2; grid-row:4; }
 .faq:nth-child(10){ grid-column:2; grid-row:5; }
 .faq h3{ font-family:var(--font-heading); font-size:16px; margin-bottom:8px; text-transform:none; }
-.faq p{ font-size:14px; line-height:1.6; }
+.faq p{ font-size:14px; line-height:1.6; max-width:60ch; }
 @media (max-width:800px){
   .faq-grid{ grid-template-columns:1fr; grid-template-rows:none; }
   .faq{ grid-column:1 !important; grid-row:auto !important; border-left:0; border-top:2px solid var(--carbon); }
