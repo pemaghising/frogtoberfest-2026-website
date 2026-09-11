@@ -52,10 +52,7 @@ body{
   color:var(--carbon);
   font-family:var(--font-body);
   -webkit-font-smoothing:antialiased;
-  /* clip (not hidden) so this doesn't turn body into a scroll container --
-     that would silently break every position:sticky element on the page,
-     since overflow-x:hidden implicitly promotes overflow-y to auto too. */
-  overflow-x:clip;
+  overflow-x:hidden;
 }
 
 img{ max-width:100%; display:block; }
@@ -253,51 +250,47 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 /* ==========================================================================
    HERO — Screen 01: Mission Launch
    ========================================================================== */
-/* Hero art sits in its own sticky grid column so it stays pinned in the
-   viewport as the copy column scrolls, and only scrolls away once the
-   row (as tall as the taller of the two columns) has fully passed --
-   that's the default behavior of a sticky item in a grid/flex row, no
-   overflow trickery needed. (Note: .hero must not set overflow other
-   than visible -- any such ancestor between the sticky item and the
-   page breaks sticky; see the body rule above for the same reason.) */
+/* Hero art is width-driven so it scales with the viewport and always reaches
+   the true right edge via justify-content, independent of the copy column.
+   Both the copy and the artwork share the same top offset so the logo and
+   the mech's head line up on the same horizontal line. */
 .hero{
   position:relative;
   background:var(--paper);
+  overflow:hidden;
+  min-height:max(820px, calc(clamp(420px, 52vw, 1160px) * 1.03));
 }
 .hero-inner{
   position:relative;
   z-index:2;
   width:100%;
-  padding-top:56px; padding-bottom:56px;
-  display:grid;
-  grid-template-columns:640px minmax(0,1fr);
-  align-items:start;
-  gap:32px;
+  padding-top:96px; padding-bottom:96px;
 }
 @media (max-width:1100px){
-  .hero-inner{ grid-template-columns:minmax(0,1fr); padding-top:40px; padding-bottom:48px; }
+  .hero{ min-height:0; }
+  .hero-inner{ padding-top:48px; padding-bottom:56px; }
 }
 
 .hero-copy{ position:relative; z-index:2; max-width:640px; }
 /* Width matches the mission-parameters plate below it. */
 .hero-logo-crop{
   display:block;
-  width:520px; max-width:100%;
+  width:700px; max-width:100%;
   aspect-ratio:736/342;
-  margin:0 0 14px;
+  margin:0 0 24px;
 }
 .hero-logo{ display:block; width:100%; height:auto; }
 .hero-copy .lede{
-  margin-bottom:16px;
+  margin-bottom:32px;
   font-size:19px;
   line-height:1.65;
   color:var(--carbon);
 }
-.hero-cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:28px; }
+.hero-cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:80px; }
 
 .hero-art{
-  position:sticky;
-  top:96px;
+  position:absolute;
+  inset:0;
   z-index:1;
   display:flex;
   align-items:flex-start;
@@ -309,24 +302,20 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   position:relative;
   display:block;
   line-height:0;
+  padding-top:96px;
 }
-/* Height-capped (not width-driven like before) so this column is shorter
-   than the copy column -- a sticky item can only visibly "hold" for
-   however much shorter it is than the row it's sticky within; if it were
-   the tallest thing in the row (as the old full-bleed sizing made it),
-   there'd be zero room for it to lag behind and sticky would be a no-op. */
 .hero-art img{
   position:relative;
   z-index:2;
   display:block;
-  height:clamp(340px, 54vh, 540px);
-  width:auto;
-  max-width:100%;
+  width:clamp(420px, 52vw, 1160px);
+  height:auto;
+  max-width:none;
 }
 .hero-annot{
   position:absolute;
   z-index:3;
-  left:-30px; top:0;
+  left:-30px; top:96px;
   writing-mode:vertical-rl;
   font-family:var(--font-mono);
   font-size:11px; letter-spacing:.2em; text-transform:uppercase;
@@ -336,8 +325,9 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   line-height:1;
 }
 @media (max-width:1100px){
-  .hero-art{ position:relative; top:auto; justify-content:center; align-items:center; margin-top:32px; }
-  .hero-art img{ width:100%; max-width:480px; height:auto; }
+  .hero-art{ position:relative; inset:auto; justify-content:center; align-items:center; margin-top:32px; }
+  .hero-figure{ padding-top:0; }
+  .hero-art img{ width:100%; max-width:480px; }
   .hero-annot{ display:none; }
 }
 
@@ -360,7 +350,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 
 .meta-grid{ display:grid; grid-template-columns:1fr 1fr; }
 .meta-card{
-  padding:14px 20px 16px;
+  padding:18px 20px 20px;
   border-top:2px solid var(--carbon);
   border-left:2px solid var(--carbon);
   display:flex; flex-direction:column; gap:8px;
