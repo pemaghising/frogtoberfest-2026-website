@@ -37,25 +37,6 @@
     updateTimelineFill();
   }
 
-  /* ---- Build Manual: blueprint lines draw themselves once in view ---- */
-  var buildBoard = document.getElementById("buildBoard");
-  if (buildBoard && "IntersectionObserver" in window) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            buildBoard.classList.add("in-view");
-            io.disconnect();
-          }
-        });
-      },
-      { threshold: 0.35 }
-    );
-    io.observe(buildBoard);
-  } else if (buildBoard) {
-    buildBoard.classList.add("in-view");
-  }
-
   /* ---- Terminal-cursor type-in for the nav HUD code label ---- */
   function typeInto(el, text, speed) {
     if (reduceMotion || !el) {
