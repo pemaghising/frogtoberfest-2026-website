@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-11T00:00:00Z",
+  "title": "Design System: Frogtoberfest 2026",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Engineering Paper", "canonical": "#EFE8DA", "tonalRamp": ["#2B1E1A", "#4A3B30", "#6E5A48", "#94806A", "#B9A38C", "#D6C6AE", "#E9DFC9", "#F7F2E6"] },
+      "paper-dim": { "role": "neutral", "displayName": "Recessed Paper", "canonical": "#E4DBC7" },
+      "surface": { "role": "neutral", "displayName": "Mauve Surface", "canonical": "#6A5257", "tonalRamp": ["#1F1517", "#382528", "#523539", "#6A5257", "#836A6E", "#A28D90", "#C3B4B6", "#E4DCDD"] },
+      "surface-2": { "role": "neutral", "displayName": "Deep Mauve", "canonical": "#4F3D41" },
+      "cyan": { "role": "primary", "displayName": "Signal Cyan", "canonical": "#2AE8D2", "tonalRamp": ["#003731", "#00554B", "#00786A", "#0A9C8A", "#2AE8D2", "#6FF0E0", "#A6F5EA", "#DAFBF5"] },
+      "go": { "role": "primary", "displayName": "Active Go-Green", "canonical": "#0B6649" },
+      "carbon": { "role": "neutral", "displayName": "Carbon Ink", "canonical": "#2B1E1A", "tonalRamp": ["#0E0A08", "#1A130F", "#2B1E1A", "#453026", "#664838", "#8C6B54", "#B79779", "#DFC9AC"] },
+      "copper": { "role": "secondary", "displayName": "Field Copper", "canonical": "#B96A32", "tonalRamp": ["#3D2110", "#5F3419", "#8C5027", "#B96A32", "#D1893F", "#E1A868", "#EFC698", "#F9E4CC"] },
+      "copper-dim": { "role": "secondary", "displayName": "Copper (text-safe)", "canonical": "#8C5027" },
+      "copper-light": { "role": "secondary", "displayName": "Copper (fill-safe)", "canonical": "#D1893F" },
+      "green": { "role": "secondary", "displayName": "Organic Armor Green", "canonical": "#8EBB81", "tonalRamp": ["#1B3016", "#2C4A24", "#3E6136", "#568047", "#8EBB81", "#AFD0A5", "#CDE3C6", "#E9F3E4"] },
+      "green-dim": { "role": "secondary", "displayName": "Green (text-safe)", "canonical": "#3E6136" },
+      "green-light": { "role": "secondary", "displayName": "Green (dark-surface text)", "canonical": "#B3DDA6" },
+      "on-dark": { "role": "neutral", "displayName": "On-Dark Text", "canonical": "#F3EEE1" },
+      "on-dark-dim": { "role": "neutral", "displayName": "On-Dark Divider (not text)", "canonical": "#A9BDB8" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero wordmark and closer statements (Demo Day) only." },
+      "headline": { "displayName": "Headline", "purpose": "Every section title." },
+      "body-lg": { "displayName": "Body Large", "purpose": "Section-opening lede paragraphs (22px variant)." },
+      "body-alt": { "displayName": "Body Large (19px variant)", "purpose": "Hero and registration lede paragraphs." },
+      "body": { "displayName": "Body", "purpose": "Supporting copy and card descriptions." },
+      "label": { "displayName": "Label", "purpose": "Eyebrow tags, HUD chips, table headers, nav links -- always mono, uppercase, tracked out." },
+      "label-xs": { "displayName": "Label (11px variant)", "purpose": "Smaller HUD scale: nav-code, hero annotation, tags, serial numbers." },
+      "label-2xs": { "displayName": "Label (10px variant)", "purpose": "Smallest HUD scale: meta-card dt labels." },
+      "ui-sm": { "displayName": "UI Micro-Scale 13px (mono)", "purpose": "Buttons, doc-index links." },
+      "ui-sm-alt": { "displayName": "UI Micro-Scale 13.5px (Inter)", "purpose": "Enroll-step body copy." },
+      "ui-md": { "displayName": "UI Micro-Scale 14px (mono)", "purpose": "Nav code, guidelines descriptions." },
+      "ui-md-alt": { "displayName": "UI Micro-Scale 14.5px (Inter)", "purpose": "Card copy across several sections." },
+      "ui-lg": { "displayName": "UI Micro-Scale 16px (Inter)", "purpose": "Statement list copy, footer." },
+      "ui-lg-alt": { "displayName": "UI Micro-Scale 17px (Oswald)", "purpose": "Meta-card dd values, enroll-step headings." }
+    },
+    "shadows": [
+      { "name": "key-press-rest", "value": "0 6px 0 0 var(--carbon), 0 12px 10px rgba(43,30,26,.25)", "purpose": "Primary CTA at rest -- the system's one elevation device." },
+      { "name": "key-press-hover", "value": "0 4px 0 0 var(--carbon), 0 6px 10px rgba(43,30,26,.22)", "purpose": "Primary CTA lifts slightly and darkens on hover." },
+      { "name": "key-press-active", "value": "0 0 0 0 var(--carbon), 0 0 16px 2px rgba(42,232,210,.55)", "purpose": "Primary CTA compresses flush and glows cyan on click." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.2, 0.7, 0.2, 1)", "purpose": "Default easing for nearly all transitions site-wide." },
+      { "name": "duration-fast", "value": "0.15s", "purpose": "Hover/focus color and border transitions." },
+      { "name": "duration-cta-release", "value": "0.32s", "purpose": "Primary CTA's slow release after a fast click, so the key-press motion reads even on a quick tap." },
+      { "name": "duration-cta-press", "value": "0.04s", "purpose": "Primary CTA's fast snap-down on the click itself." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-nav", "value": "680px" },
+      { "name": "stack", "value": "1100px" },
+      { "name": "compact-margin", "value": "900px" },
+      { "name": "nav-compact", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action per screen. Cyan fill, hard key-press shadow, inverts on hover, compresses and glows on click.",
+      "html": "<button class=\"ds-btn-primary\"><span class=\"ds-btn-chip\" aria-hidden=\"true\"></span> Enter the Mission</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 12px; position: relative; top: 0; background: #2AE8D2; color: #2B1E1A; border: 2px solid #2B1E1A; padding: 16px 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; box-shadow: 0 6px 0 0 #2B1E1A, 0 12px 10px rgba(43,30,26,.25); transition: background-color .32s ease-out, color .32s ease-out, top .32s ease-out, box-shadow .32s ease-out; } .ds-btn-chip { width: 8px; height: 8px; background: currentColor; flex: none; box-shadow: 0 0 0 2px #2B1E1A, 0 0 8px 1px currentColor; } .ds-btn-primary:hover { background: #2B1E1A; color: #2AE8D2; top: 2px; box-shadow: 0 4px 0 0 #2B1E1A, 0 6px 10px rgba(43,30,26,.22); } .ds-btn-primary:focus-visible { outline: 2px solid #2AE8D2; outline-offset: 2px; } .ds-btn-primary:active { top: 6px; background: #0B6649; color: #F3EEE1; box-shadow: 0 0 0 0 #2B1E1A, 0 0 16px 2px rgba(42,232,210,.55); transition: background-color .04s ease-in, color .04s ease-in, top .04s ease-in, box-shadow .04s ease-in; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action -- transparent fill, inverts to solid carbon on hover.",
+      "html": "<button class=\"ds-btn-outline\">View Guidelines</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; gap: 12px; border: 2px solid #2B1E1A; padding: 16px 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; color: #2B1E1A; cursor: pointer; transition: background-color .15s cubic-bezier(0.2,0.7,0.2,1), color .15s cubic-bezier(0.2,0.7,0.2,1); } .ds-btn-outline:hover { background: #2B1E1A; color: #EFE8DA; } .ds-btn-outline:focus-visible { outline: 2px solid #2AE8D2; outline-offset: 2px; }"
+    },
+    {
+      "name": "Engineering Plate Card",
+      "kind": "card",
+      "refersTo": "meta-plate",
+      "description": "The signature bordered panel with a mauve header bar and a collapsed-border data grid beneath it -- reads as one instrument plate rather than separate boxes.",
+      "html": "<div class=\"ds-plate\"><div class=\"ds-plate-hdr\"><span class=\"ds-plate-chip\" aria-hidden=\"true\"></span><span>Mission Parameters</span><span class=\"ds-plate-ref\">04 Fields</span></div><dl class=\"ds-plate-grid\"><div class=\"ds-plate-cell\"><dt>Who</dt><dd>Anyone based in Nepal</dd></div><div class=\"ds-plate-cell\"><dt>How</dt><dd>Build, ship &amp; open-source one AI Agent</dd></div></dl></div>",
+      "css": ".ds-plate { border: 2px solid #2B1E1A; background: #EFE8DA; } .ds-plate-hdr { display: flex; align-items: center; gap: 12px; background: #6A5257; color: #F3EEE1; padding: 11px 18px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; } .ds-plate-chip { width: 8px; height: 8px; background: #2AE8D2; flex: none; } .ds-plate-ref { margin-left: auto; opacity: .75; letter-spacing: .1em; } .ds-plate-grid { display: grid; grid-template-columns: 1fr 1fr; } .ds-plate-cell { padding: 18px 20px 20px; border-top: 2px solid #2B1E1A; } .ds-plate-cell:first-child { border-top: 0; border-right: 2px solid #2B1E1A; } .ds-plate-cell dt { display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .16em; color: #8C5027; text-transform: uppercase; } .ds-plate-cell dt::before { content: ''; width: 6px; height: 6px; background: #B96A32; flex: none; } .ds-plate-cell dd { font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 500; line-height: 1.35; color: #2B1E1A; margin: 4px 0 0; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-links",
+      "description": "Mono uppercase nav link; cyan underline on hover.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Participation</a><a href=\"#\" class=\"is-active\">Timeline</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 36px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; } .ds-nav a { color: #F3EEE1; text-decoration: none; padding: 6px 2px; border-bottom: 2px solid transparent; transition: border-color .15s, color .15s; } .ds-nav a:hover, .ds-nav a:focus-visible, .ds-nav a.is-active { color: #F3EEE1; border-color: #2AE8D2; } .ds-nav a:focus-visible { outline: 2px solid #2AE8D2; outline-offset: 4px; }"
+    },
+    {
+      "name": "HUD Eyebrow Tag",
+      "kind": "custom",
+      "description": "The mono-uppercase eyebrow with its square chip glyph, preceding nearly every section heading.",
+      "html": "<p class=\"ds-tag\"><span class=\"ds-tag-chip\" aria-hidden=\"true\"></span>Screen 03 &middot; Mission Log</p>",
+      "css": ".ds-tag { display: inline-flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #6A5257; margin: 0; } .ds-tag-chip { width: 8px; height: 8px; background: #B96A32; flex: none; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Analog Autonomy",
+    "overview": "The site's own art-direction brief states it plainly: Gundam x Ghost in the Shell x Voltron, filtered through brutalist editorial layout. Every surface reads like a field manual or mission terminal for a mech pilot: hairline blueprint grids, HUD-style mono labels, engineering-plate tables, and a single frog-shaped mecha rendered with real illustrative weight rather than flat vector iconography. The tension the name captures -- \"analog\" (paper texture, hand-drafted grid lines, warm printed-matter palette) against \"autonomy\" (the AI-agent subject matter, cyan status accents, terminal typography) -- is the system's organizing idea, not a decoration on top of a generic SaaS template. Depth comes from borders and hard offsets, never blur. Corners are square everywhere, without exception. Color is disciplined: a warm paper-and-copper base carries almost the entire page, and the one saturated color (cyan) is reserved for AI/system-status meaning, never used decoratively.",
+    "keyCharacteristics": [
+      "Sharp corners only -- zero border-radius anywhere in the system, enforced globally",
+      "2px borders as the primary structural/depth device, replacing box-shadow-based elevation",
+      "A warm, paper-textured neutral base (grain + scanline overlays at 2-5% opacity) instead of a stark white or black canvas",
+      "Cyan is a status/AI-activity signal color, not a general accent -- used sparingly and consistently",
+      "Numbered HUD labels (01/02/03) and mono-font engineering tags are load-bearing thematic devices, repeated deliberately across every major section",
+      "One real illustrated hero subject (the frog mech + its human pilot) carries the emotional register the copy doesn't reach for alone"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Cyan never appears as generic decoration; every instance means \"this is active, primary, or AI-related.\"", "section": "colors" },
+      { "name": "The No-Gray Rule", "body": "There is no neutral gray anywhere in the system. Every \"muted\" surface is a warm paper or mauve tone; every \"dim\" text color is a desaturated step of an actual palette hue.", "section": "colors" },
+      { "name": "The Mono-Means-System Rule", "body": "IBM Plex Mono is reserved for UI chrome and data. It never appears as a stylistic flourish on body prose.", "section": "typography" },
+      { "name": "The One Shadow Rule", "body": "Blur-based shadows do not exist in this system outside the hero wordmark's sticker treatment. If something needs to feel elevated, give it a border and, if it's the primary action, the key-press hard-offset treatment.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep border-radius at 0 everywhere, including on any new component.",
+      "Do use 2px carbon borders as the default depth device; reach for the key-press hard-offset shadow only on the single primary action per screen.",
+      "Do reserve cyan for AI-activity/status/primary-action meaning; use copper or green for decorative or secondary accents instead.",
+      "Do use IBM Plex Mono only for UI chrome, labels, and data -- never for body prose.",
+      "Do keep the numbered-label and blueprint-grid HUD motifs consistent if extending them to a new section.",
+      "Do keep every nav destination reachable at every viewport width -- collapse into a toggleable panel, never display:none into nothing."
+    ],
+    "donts": [
+      "Don't introduce a soft, blurred box-shadow anywhere outside the hero wordmark's sticker treatment.",
+      "Don't use gray for \"muted\" text or surfaces -- desaturate from an existing palette hue instead.",
+      "Don't use on-dark-dim as body text color on dark surfaces without checking contrast -- it's documented as a border/divider token, not a text token.",
+      "Don't add rounded corners, drop shadows, or gradient fills to any component."
+    ]
+  }
+}

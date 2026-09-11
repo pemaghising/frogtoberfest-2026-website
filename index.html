@@ -45,6 +45,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to content</a>
+
 <div class="grain" aria-hidden="true"></div>
 <div class="scanlines" aria-hidden="true"></div>
 
@@ -56,7 +58,7 @@
       <span class="div" aria-hidden="true"></span>
       <span class="nav-code">AGENT&#8209;FORGE&#8209;2026</span>
     </div>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="#beyond">Participation</a>
       <a href="#timeline">Timeline</a>
       <a href="#resources">FAQs</a>
@@ -65,22 +67,17 @@
     <a class="btn btn-primary nav-cta" id="navCta" href="https://frog.ly/frogtoberfest-2026">
       <span class="chip" aria-hidden="true"></span> Enter the Mission
     </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks">
+      <span class="sr-only">Menu</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </button>
   </div>
 </nav>
 
+<main id="main-content" tabindex="-1">
+
 <!-- ============ SCREEN 01 — HOMEPAGE / MISSION LAUNCH ============ -->
 <header class="screen hero" id="mission">
-  <div class="hero-art" aria-hidden="false">
-    <div class="blueprint-grid" aria-hidden="true"></div>
-    <div class="hero-figure">
-      <span class="hero-annot" aria-hidden="true">UNIT&#8209;07 &middot; PILOT: HUMAN</span>
-      <picture>
-        <source srcset="IMG/hero-pilot-tall.webp" type="image/webp">
-        <img src="IMG/hero-pilot-tall.png" alt="Frog Mecha with its pilot seated on its shoulder" width="935" height="1062" fetchpriority="high" decoding="async">
-      </picture>
-    </div>
-  </div>
-
   <div class="wrap hero-inner">
     <div class="hero-copy">
       <h1 class="hero-logo-crop"><img class="hero-logo" src="IMG/main-logo.svg" alt="Frogtoberfest 2026"></h1>
@@ -118,6 +115,22 @@
       </div>
     </div>
   </div>
+
+  <!-- Placed after .hero-inner so mobile (where this switches from an
+       absolute full-bleed layer to a normal-flow block) shows the headline
+       and CTA before the mech, not after. Desktop is unaffected: it's
+       position:absolute there, so document order doesn't drive its
+       visual placement. -->
+  <div class="hero-art" aria-hidden="false">
+    <div class="blueprint-grid" aria-hidden="true"></div>
+    <div class="hero-figure">
+      <span class="hero-annot" aria-hidden="true">UNIT&#8209;07 &middot; PILOT: HUMAN</span>
+      <picture>
+        <source srcset="IMG/hero-pilot-tall.webp" type="image/webp">
+        <img src="IMG/hero-pilot-tall.png" alt="Frog Mecha with its pilot seated on its shoulder" width="935" height="1062" fetchpriority="high" decoding="async">
+      </picture>
+    </div>
+  </div>
 </header>
 
 <!-- ============ SCREEN 02 — BEYOND CONTRIBUTING ============ -->
@@ -134,7 +147,10 @@
     <div class="beyond-inner">
       <div class="beyond-figure">
         <span class="serial-tag">UNIT&nbsp;07 &middot; MECHA&#8209;GRN</span>
-        <img src="IMG/mech-crossed.png" alt="Frog Mecha, arms crossed">
+        <picture>
+          <source srcset="IMG/mech-crossed.webp" type="image/webp">
+          <img src="IMG/mech-crossed.png" alt="Frog Mecha, arms crossed" loading="lazy" decoding="async">
+        </picture>
       </div>
 
       <div>
@@ -371,7 +387,10 @@
     </div>
 
     <div class="recognition-art">
-      <img src="IMG/mech-victory.png" alt="Frog Mecha, victory pose">
+      <picture>
+        <source srcset="IMG/mech-victory.webp" type="image/webp">
+        <img src="IMG/mech-victory.png" alt="Frog Mecha, victory pose" loading="lazy" decoding="async">
+      </picture>
     </div>
   </div>
 </section>
@@ -480,6 +499,8 @@
     <p class="lede lg">October 30, 2026 &middot; Kathmandu Valley.<br>Five teams present live. <span style="white-space:nowrap;">One mission gets the grand prize.</span></p>
   </div>
 </section>
+
+</main>
 
 <!-- ============ FOOTER ============ -->
 <footer class="footer">

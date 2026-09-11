@@ -32,9 +32,41 @@
     if (reduceMotion) {
       fill.style.transition = "none";
     }
-    window.addEventListener("scroll", updateTimelineFill, { passive: true });
-    window.addEventListener("resize", updateTimelineFill);
+    // rAF-throttled: scroll can fire far faster than the browser paints,
+    // and this reads layout (getBoundingClientRect) on every node -- running
+    // it unthrottled reads/writes layout on every scroll tick instead of
+    // once per frame.
+    var timelineTicking = false;
+    function onTimelineScroll() {
+      if (timelineTicking) return;
+      timelineTicking = true;
+      requestAnimationFrame(function () {
+        updateTimelineFill();
+        timelineTicking = false;
+      });
+    }
+    window.addEventListener("scroll", onTimelineScroll, { passive: true });
+    window.addEventListener("resize", onTimelineScroll);
     updateTimelineFill();
+  }
+
+  /* ---- Mobile nav: hamburger toggles the link panel ---- */
+  var navToggle = document.getElementById("navToggle");
+  var navLinks = document.getElementById("navLinks");
+  if (navToggle && navLinks) {
+    function setNavOpen(open) {
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navLinks.classList.toggle("is-open", open);
+    }
+    navToggle.addEventListener("click", function () {
+      setNavOpen(navToggle.getAttribute("aria-expanded") !== "true");
+    });
+    navLinks.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") setNavOpen(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setNavOpen(false);
+    });
   }
 
   /* ---- Terminal-cursor type-in for the nav HUD code label ---- */
