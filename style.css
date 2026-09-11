@@ -1,0 +1,683 @@
+/* ==========================================================================
+   FROGTOBERFEST 2026 — "Analog Autonomy"
+   Art direction: Gundam x Ghost in the Shell x Voltron. Brutalist editorial
+   HUD. Sharp corners only. 2px borders instead of shadows. Engineering grid.
+   ========================================================================== */
+
+:root{
+  /* ---- Design System tokens (per Figma Art Direction doc) ---- */
+  --paper:        #EFE8DA;   /* primary background */
+  --paper-dim:     #E4DBC7;  /* recessed / muted panels on paper */
+  --surface:      #6A5257;   /* navigation and surfaces — brown/mauve from Scanline.svg, darkened ~8% for AA text contrast */
+  --surface-2:    #4F3D41;   /* deeper shade for depth on the surface color */
+  --cyan:         #2AE8D2;   /* highlights + status, AI activity only */
+  --go:           #0B6649;   /* pressed/active button state — reads as "powered", not "off" */
+  --carbon:       #2B1E1A;   /* typography + borders */
+  --copper:       #B96A32;   /* mechanical accents (decorative / large only) */
+  --copper-dim:   #8C5027;   /* copper for small text — clears AA on paper */
+  --copper-light: #D1893F;   /* copper background for dark text on top */
+  --green:        #8EBB81;   /* organic accent, sampled from the mech's armor plating */
+  --green-dim:    #3E6136;   /* green for small text on paper — 5.8:1 AA */
+  --green-light:  #B3DDA6;   /* green for small text on the surface color — 4.67:1 AA */
+
+  --on-dark:      #F3EEE1;   /* text on the surface color */
+  --on-dark-dim:  #A9BDB8;   /* borders/dividers on the surface color only — not text */
+
+  /* ---- Type (3 typefaces) ---- */
+  --font-heading: 'Oswald', sans-serif;           /* DIN Condensed sub — also stands in for display use */
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;     /* UI / HUD labels */
+
+  /* ---- Grid ---- */
+  --margin: 64px;
+  --content-max: 1792px; /* 1920 - 64*2 */
+  --unit: 8px;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+
+@media (max-width:900px){
+  :root{ --margin:24px; }
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--carbon);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+h1,h2,h3,h4,p,dl,dd,dt{ margin:0; }
+button{ font:inherit; }
+
+/* No radius, anywhere. No exceptions. */
+*{ border-radius:0 !important; }
+
+/* ---- Layout scaffolding ---- */
+.wrap{
+  max-width:var(--content-max);
+  margin:0 auto;
+  padding:0 var(--margin);
+}
+.screen{
+  position:relative;
+  border-bottom:2px solid var(--carbon);
+}
+.screen-pad{ padding-block: 96px; }
+@media (max-width:900px){ .screen-pad{ padding-block:56px; } }
+
+/* ---- Engineering paper grain + scanline (2-3% opacity per spec) ---- */
+.grain{
+  position:fixed; inset:0; z-index:9000; pointer-events:none;
+  opacity:.05; mix-blend-mode:multiply;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(43,30,26,.5) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(43,30,26,.5) 0 1px, transparent 1px 3px);
+  background-size:3px 3px;
+}
+.scanlines{
+  position:fixed; inset:0; z-index:9001; pointer-events:none;
+  opacity:.03;
+  background:repeating-linear-gradient(180deg, var(--carbon) 0 1px, transparent 1px 3px);
+}
+@media (prefers-reduced-motion:reduce){ .grain,.scanlines{ opacity:.02; } }
+
+/* ---- Blueprint grid overlay ---- */
+.blueprint-grid{
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(90deg, rgba(43,30,26,.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(43,30,26,.08) 1px, transparent 1px);
+  background-size:64px 64px;
+  background-position:center top;
+}
+.blueprint-grid.on-dark{
+  background-image:
+    linear-gradient(90deg, rgba(243,238,225,.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(243,238,225,.08) 1px, transparent 1px);
+}
+
+/* ---- Eyebrow / mission tag ---- */
+.tag{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-mono);
+  font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--surface);
+}
+.tag::before{ content:''; width:8px; height:8px; background:var(--copper); flex:none; }
+.on-dark .tag{ color:var(--on-dark); }
+.on-dark .tag::before{ background:var(--cyan); }
+
+.serial{
+  font-family:var(--font-mono);
+  font-size:12px; letter-spacing:.06em; color:var(--surface);
+  opacity:.8;
+}
+
+h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:uppercase; }
+.h1{ font-size:clamp(52px,7vw,124px); line-height:.92; letter-spacing:-.01em; }
+.h2{ font-size:clamp(36px,4.2vw,68px); line-height:.96; letter-spacing:-.005em; }
+
+.lede{ font-family:var(--font-body); font-size:18px; line-height:1.6; color:var(--carbon); }
+.lede.lg{ font-size:22px; line-height:1.5; }
+
+/* ---- Buttons: sharp rectangles, 2px borders, uppercase, no shadow ---- */
+.btn{
+  display:inline-flex; align-items:center; gap:12px;
+  border:2px solid var(--carbon);
+  padding:16px 28px;
+  font-family:var(--font-mono);
+  font-size:13px; letter-spacing:.12em; text-transform:uppercase;
+  background:transparent; color:var(--carbon);
+  cursor:pointer;
+  transition:background-color .15s var(--ease), color .15s var(--ease), border-color .15s var(--ease);
+}
+.btn .chip{ width:8px; height:8px; background:currentColor; flex:none; }
+
+/* Primary CTA gets tactile key-press physics: raised at rest, lifts on hover,
+   presses flush on click. Sharp corners stay (no radius, per the brief) --
+   the "LED" is the existing square chip with a glow ring instead of a round dot. */
+.btn-primary{
+  --depth:6px;
+  position:relative;
+  top:0;
+  background:var(--cyan); border-color:var(--carbon); color:var(--carbon);
+  box-shadow:0 var(--depth) 0 0 var(--carbon), 0 calc(var(--depth) + 6px) 10px rgba(43,30,26,.25);
+  /* Slow release, so letting go of a real (fast, ~100ms) click is still
+     visible -- the snap-down on press uses its own fast transition below. */
+  transition:background-color .32s ease-out, color .32s ease-out,
+             top .32s ease-out, box-shadow .32s ease-out;
+}
+.btn-primary:hover{
+  background:var(--carbon); color:var(--cyan);
+  top:2px;
+  box-shadow:0 calc(var(--depth) - 2px) 0 0 var(--carbon), 0 6px 10px rgba(43,30,26,.22);
+}
+.btn-primary:active{
+  top:var(--depth);
+  background:var(--go); color:var(--on-dark);
+  box-shadow:0 0 0 0 var(--carbon), 0 0 16px 2px rgba(42,232,210,.55);
+  transition:background-color .04s ease-in, color .04s ease-in,
+             top .04s ease-in, box-shadow .04s ease-in;
+}
+.btn-primary .chip{
+  box-shadow:0 0 0 2px var(--carbon), 0 0 8px 1px currentColor;
+}
+.btn-primary:active .chip{
+  background:var(--cyan);
+  box-shadow:0 0 0 2px var(--carbon), 0 0 10px 2px var(--cyan);
+}
+.btn-outline{ border-color:var(--carbon); color:var(--carbon); }
+.btn-outline:hover{ background:var(--carbon); color:var(--paper); }
+
+/* ==========================================================================
+   NAV — engineering metadata bar
+   ========================================================================== */
+.nav{
+  position:sticky; top:0; z-index:500;
+  background-color:var(--surface);
+  background-image:url('IMG/nav-scanline-left.svg'), url('IMG/nav-scanline-right.svg');
+  background-repeat:no-repeat, no-repeat;
+  background-position:left center, right center;
+  background-size:auto 100%, auto 100%;
+  color:var(--on-dark);
+  border-bottom:2px solid var(--carbon);
+}
+.nav .wrap{
+  display:flex; align-items:center;
+  height:80px;
+  gap:32px;
+}
+.nav-brand{ display:flex; align-items:center; gap:16px; flex:none; }
+.nav-brand img{ height:36px; width:auto; filter:brightness(0) invert(1); }
+.nav-brand .div{ width:2px; height:24px; background:var(--on-dark-dim); }
+.nav-code{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
+  color:var(--on-dark); text-transform:uppercase; white-space:nowrap;
+}
+.nav-links{
+  display:flex; align-items:center; gap:36px;
+  margin-left:auto;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.nav-links a{ white-space:nowrap; padding:6px 2px; border-bottom:2px solid transparent; transition:border-color .15s var(--ease), color .15s; }
+.nav-links a:hover{ color:var(--on-dark); border-color:var(--cyan); }
+
+/* Only shown once the hero's own Enter Mission button scrolls out of view
+   (toggled via IntersectionObserver in script.js) -- collapses out of the
+   layout rather than just fading, so it doesn't reserve dead space in the nav. */
+.nav-cta{
+  flex:none;
+  padding:10px 18px;
+  font-size:11px;
+  max-width:0;
+  overflow:hidden;
+  opacity:0;
+  pointer-events:none;
+  white-space:nowrap;
+  transition:max-width .25s var(--ease), opacity .2s var(--ease),
+             background-color .15s var(--ease), color .15s var(--ease);
+}
+.nav-cta.is-visible{
+  max-width:220px;
+  opacity:1;
+  pointer-events:auto;
+}
+
+@media (max-width:680px){
+  .nav-links{ display:none; }
+}
+@media (max-width:700px){
+  .nav-brand .div,
+  .nav-code{ display:none; }
+  .nav .wrap{ gap:12px; }
+}
+@media (max-width:400px){
+  .nav-brand img{ height:28px; }
+}
+
+/* ==========================================================================
+   HERO — Screen 01: Mission Launch
+   ========================================================================== */
+/* Hero art is width-driven so it scales with the viewport and always reaches
+   the true right edge via justify-content, independent of the copy column.
+   Both the copy and the artwork share the same top offset so the logo and
+   the mech's head line up on the same horizontal line. */
+.hero{
+  position:relative;
+  background:var(--paper);
+  overflow:hidden;
+  min-height:max(820px, calc(clamp(420px, 52vw, 1160px) * 1.03));
+}
+.hero-inner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  padding-top:96px; padding-bottom:96px;
+}
+@media (max-width:1100px){
+  .hero{ min-height:0; }
+  .hero-inner{ padding-top:48px; padding-bottom:56px; }
+}
+
+.hero-copy{ position:relative; z-index:2; max-width:640px; }
+/* Width matches the mission-parameters plate below it. */
+.hero-logo-crop{
+  display:block;
+  width:700px; max-width:100%;
+  aspect-ratio:736/342;
+  margin:0 0 24px;
+}
+.hero-logo{ display:block; width:100%; height:auto; }
+.hero-copy .lede{
+  max-width:40ch;
+  margin-bottom:32px;
+  font-size:19px;
+  line-height:1.65;
+  color:var(--carbon);
+}
+.hero-cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:80px; }
+
+.hero-art{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+  pointer-events:none;
+}
+.hero-art .blueprint-grid{ opacity:.7; }
+.hero-figure{
+  position:relative;
+  display:block;
+  line-height:0;
+  padding-top:96px;
+}
+.hero-art img{
+  position:relative;
+  z-index:2;
+  display:block;
+  width:clamp(420px, 52vw, 1160px);
+  height:auto;
+  max-width:none;
+}
+.hero-annot{
+  position:absolute;
+  z-index:3;
+  left:-30px; top:96px;
+  writing-mode:vertical-rl;
+  font-family:var(--font-mono);
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--surface);
+  opacity:.6;
+  white-space:nowrap;
+  line-height:1;
+}
+@media (max-width:1100px){
+  .hero-art{ position:relative; inset:auto; justify-content:center; align-items:center; margin-top:32px; }
+  .hero-figure{ padding-top:0; }
+  .hero-art img{ width:100%; max-width:480px; }
+  .hero-annot{ display:none; }
+}
+
+/* ---- Mission parameters spec plate ---- */
+.meta-plate{
+  max-width:700px;
+  border:2px solid var(--carbon);
+  background:var(--paper);
+  text-align:left;
+}
+.meta-plate-hdr{
+  display:flex; align-items:center; gap:12px;
+  background:var(--surface); color:var(--on-dark);
+  padding:11px 18px;
+  font-family:var(--font-mono);
+  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+}
+.meta-plate-hdr .chip{ width:8px; height:8px; background:var(--cyan); flex:none; }
+.meta-plate-ref{ margin-left:auto; opacity:.75; letter-spacing:.1em; }
+
+.meta-grid{ display:grid; grid-template-columns:1fr 1fr; }
+.meta-card{
+  padding:18px 20px 20px;
+  border-top:2px solid var(--carbon);
+  border-left:2px solid var(--carbon);
+  display:flex; flex-direction:column; gap:8px;
+}
+.meta-card:nth-child(-n+2){ border-top:0; }
+.meta-card:nth-child(odd){ border-left:0; }
+.meta-card dt{
+  display:flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:10px; letter-spacing:.16em;
+  color:var(--copper-dim); text-transform:uppercase;
+}
+.meta-card dt::before{
+  content:''; width:6px; height:6px; background:var(--copper); flex:none;
+}
+.meta-card dd{
+  font-family:var(--font-heading); font-size:17px; font-weight:500;
+  text-transform:none; line-height:1.35; color:var(--carbon);
+}
+@media (max-width:560px){
+  .meta-grid{ grid-template-columns:1fr; }
+  .meta-card,
+  .meta-card:nth-child(-n+2){ border-left:0; border-top:2px solid var(--carbon); }
+  .meta-card:first-child{ border-top:0; }
+}
+
+/* ==========================================================================
+   SECTION HEADER — reused across screens
+   ========================================================================== */
+.sec-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:32px;
+  margin-bottom:56px;
+  flex-wrap:wrap;
+}
+.sec-head .h2{ margin-top:14px; }
+.sec-head-right{ font-family:var(--font-mono); font-size:12px; color:var(--green-dim); text-transform:uppercase; letter-spacing:.08em; text-align:right; white-space:nowrap; }
+
+/* ==========================================================================
+   Screen 02 — BEYOND CONTRIBUTING (editorial)
+   ========================================================================== */
+.beyond{ background:var(--paper); }
+.beyond-inner{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; }
+@media (max-width:1100px){ .beyond-inner{ grid-template-columns:1fr; gap:40px; } }
+
+.beyond-figure{
+  position:relative;
+  border:2px solid var(--carbon);
+  background:var(--paper-dim);
+  overflow:hidden;
+  height:480px;
+}
+.beyond-figure img{ width:100%; height:100%; object-fit:cover; object-position:center 15%; }
+.beyond-figure .serial-tag{
+  position:absolute; top:16px; left:16px;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.08em;
+  color:var(--green-dim);
+}
+
+.statement-list{ margin-top:40px; display:grid; grid-template-columns:1fr 1fr; border:2px solid var(--carbon); }
+.statement{
+  padding:32px; border-left:2px solid var(--carbon); border-top:2px solid var(--carbon);
+  display:flex; flex-direction:column; gap:16px;
+}
+.statement:nth-child(-n+2){ border-top:0; }
+.statement:nth-child(odd){ border-left:0; }
+.statement .num{ font-family:var(--font-mono); font-size:12px; color:var(--copper-dim); }
+.statement p{ font-family:var(--font-body); font-size:15.5px; line-height:1.6; }
+@media (max-width:700px){
+  .statement-list{ grid-template-columns:1fr; }
+  .statement{ border-left:0; }
+  .statement:nth-child(n){ border-top:2px solid var(--carbon); }
+  .statement:first-child{ border-top:0; }
+}
+
+.reasons{ display:grid; grid-template-columns:repeat(3,1fr); border:2px solid var(--carbon); margin-top:24px; }
+.reason{ padding:28px; border-left:2px solid var(--carbon); }
+.reason:first-child{ border-left:0; }
+.reason .num{ font-family:var(--font-mono); font-size:12px; color:var(--copper-dim); display:block; margin-bottom:14px; }
+.reason h3{ font-family:var(--font-heading); font-size:19px; margin-bottom:8px; }
+.reason p{ font-size:14.5px; line-height:1.55; }
+.reason.hi{ background:var(--surface); color:var(--on-dark); }
+.reason.hi .num{ color:var(--cyan); }
+@media (max-width:700px){
+  .reasons{ grid-template-columns:1fr; }
+  .reason{ border-left:0; border-top:2px solid var(--carbon); }
+  .reason:first-child{ border-top:0; }
+}
+
+/* ==========================================================================
+   Screen 04 — MISSION LOG TIMELINE
+   ========================================================================== */
+.timeline{ background:var(--paper); }
+.tl-rail{
+  position:relative;
+  padding-left:56px;
+}
+.tl-rail::before{
+  content:'';
+  position:absolute; left:7px; top:8px; bottom:8px; width:2px;
+  background:var(--paper-dim);
+  border-left:2px solid var(--carbon);
+}
+.tl-fill{
+  position:absolute; left:7px; top:8px; bottom:8px; width:2px;
+  background:var(--cyan);
+  transform:scaleY(0);
+  transform-origin:top;
+  transition:transform .2s linear;
+}
+.tl-node{ position:relative; padding-bottom:48px; }
+.tl-node:last-child{ padding-bottom:0; }
+.tl-node::before{
+  content:''; position:absolute; left:-56px; top:2px;
+  width:16px; height:16px; background:var(--paper);
+  border:2px solid var(--carbon);
+}
+.tl-node.active::before{ background:var(--cyan); }
+.tl-node.hi::before{ background:var(--copper); }
+.tl-node-inner{
+  display:grid; grid-template-columns:170px 200px 1fr; gap:24px; align-items:baseline;
+  border:2px solid var(--carbon); padding:22px 24px;
+  background:var(--paper-dim);
+}
+.tl-node.hi .tl-node-inner{ background:var(--surface); color:var(--on-dark); border-color:var(--carbon); }
+.tl-date{ font-family:var(--font-mono); font-size:13px; color:var(--copper-dim); }
+.tl-node.hi .tl-date{ color:var(--cyan); }
+.tl-phase{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--surface); }
+.tl-node.hi .tl-phase{ color:var(--cyan); }
+.tl-desc{ font-family:var(--font-body); font-size:15px; line-height:1.5; }
+@media (max-width:800px){
+  .tl-node-inner{ grid-template-columns:1fr; gap:6px; }
+}
+
+/* ==========================================================================
+   Screen 05 — AI AGENT BUILD MANUAL (blueprint)
+   ========================================================================== */
+.build{ background:var(--paper-dim); }
+.build-board{
+  position:relative;
+  border:2px solid var(--carbon);
+  background:var(--paper);
+  padding:56px;
+  display:grid; grid-template-columns:1fr 1.1fr; gap:32px; align-items:center;
+  min-height:640px;
+}
+@media (max-width:1100px){ .build-board{ grid-template-columns:1fr; padding:32px; } }
+
+.build-figure{ position:relative; display:flex; justify-content:center; padding:24px; }
+.build-figure img{ width:min(420px,100%); position:relative; z-index:2; }
+.build-line{
+  position:absolute; inset:0;
+  pointer-events:none;
+}
+.build-line svg{ width:100%; height:100%; }
+.build-line svg path{
+  fill:none; stroke:var(--carbon); stroke-width:2;
+  stroke-dasharray:900; stroke-dashoffset:900;
+}
+.build-board.in-view .build-line svg path{
+  animation:draw 1.4s var(--ease) forwards;
+}
+@keyframes draw{ to{ stroke-dashoffset:0; } }
+@media (prefers-reduced-motion:reduce){
+  .build-line svg path{ stroke-dashoffset:0; animation:none; }
+}
+
+.build-labels{ display:flex; flex-direction:column; gap:0; border:2px solid var(--carbon); }
+.build-label{ padding:20px 24px; border-top:2px solid var(--carbon); display:flex; gap:16px; }
+.build-label:first-child{ border-top:0; }
+.build-label .idx{ font-family:var(--font-mono); font-size:11px; color:var(--copper-dim); width:22px; flex:none; }
+.build-label h3{ font-family:var(--font-heading); font-size:17px; margin-bottom:4px; }
+.build-label p{ font-family:var(--font-body); font-size:13.5px; line-height:1.5; color:var(--carbon); }
+
+/* ==========================================================================
+   Screen 06 — GUIDELINES (indexed doc layout)
+   ========================================================================== */
+.guidelines{ background:var(--paper); }
+.doc-layout{ display:grid; grid-template-columns:260px 1fr; gap:56px; align-items:start; }
+@media (max-width:900px){ .doc-layout{ grid-template-columns:1fr; gap:32px; } }
+.doc-index{ position:sticky; top:104px; border:2px solid var(--carbon); }
+.doc-index a{
+  display:block; padding:14px 18px; font-family:var(--font-mono); font-size:12px;
+  letter-spacing:.06em; text-transform:uppercase; border-top:2px solid var(--carbon);
+}
+.doc-index a:first-child{ border-top:0; }
+.doc-index a:hover{ background:var(--surface); color:var(--on-dark); }
+
+.doc-block{ border:2px solid var(--carbon); margin-bottom:2px; }
+.doc-block-hdr{
+  background:var(--surface); color:var(--on-dark);
+  padding:14px 24px; display:flex; align-items:center; gap:14px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+}
+.doc-block-hdr .chip{ width:8px; height:8px; background:var(--cyan); }
+.submission-item{ display:flex; gap:24px; padding:24px; border-top:2px solid var(--carbon); }
+.submission-item:first-child{ border-top:0; }
+.submission-item .idx{ font-family:var(--font-mono); font-size:12px; color:var(--copper-dim); width:28px; flex:none; }
+.submission-item .title{ font-family:var(--font-heading); font-size:17px; width:220px; flex:none; }
+.submission-item .desc{ font-family:var(--font-body); font-size:14.5px; line-height:1.55; flex:1; }
+@media (max-width:700px){
+  .submission-item{ flex-wrap:wrap; }
+  .submission-item .title{ width:100%; }
+}
+
+.criteria-grid{ display:grid; grid-template-columns:repeat(3,1fr); }
+.criterion{ padding:24px; border-top:2px solid var(--carbon); border-left:2px solid var(--carbon); }
+.criterion:nth-child(-n+3){ border-top:0; }
+.criterion:nth-child(3n+1){ border-left:0; }
+.criterion .num{ font-family:var(--font-mono); font-size:11px; color:var(--copper-dim); }
+.criterion h3{ font-family:var(--font-heading); font-size:16px; margin:8px 0 6px; }
+.criterion p{ font-size:13.5px; line-height:1.5; }
+@media (max-width:700px){
+  .criteria-grid{ grid-template-columns:1fr; }
+  .criterion{ border-left:0; }
+  .criterion:nth-child(n){ border-top:2px solid var(--carbon); }
+  .criterion:first-child{ border-top:0; }
+}
+
+/* ==========================================================================
+   Screen 07 — RECOGNITION (mission badges)
+   ========================================================================== */
+.recognition{ background:var(--surface); color:var(--on-dark); position:relative; }
+.recognition .blueprint-grid{ opacity:.4; }
+.recognition-inner{ position:relative; z-index:2; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:start; }
+@media (max-width:1100px){ .recognition-inner{ grid-template-columns:1fr; } }
+
+.badge-list{ display:flex; flex-direction:column; gap:2px; }
+.badge{
+  position:relative;
+  border:2px solid var(--on-dark-dim);
+  padding:28px 28px 28px 88px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.badge::before{
+  content:attr(data-rank);
+  position:absolute; left:24px; top:28px;
+  font-family:var(--font-heading); font-size:28px; color:var(--cyan);
+}
+.badge .corner{ position:absolute; width:14px; height:14px; border:2px solid var(--on-dark); }
+.badge .corner.tl{ top:-2px; left:-2px; border-right:0; border-bottom:0; }
+.badge .corner.br{ bottom:-2px; right:-2px; border-left:0; border-top:0; }
+.badge h3{ font-family:var(--font-heading); font-size:22px; color:var(--paper); }
+.badge p{ font-size:14.5px; line-height:1.55; color:var(--on-dark); max-width:60ch; }
+.badge .prize{
+  align-self:flex-start; margin-top:6px;
+  border:2px solid var(--cyan); color:var(--on-dark);
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  padding:6px 14px;
+}
+
+.recognition-art{ position:relative; border:2px solid var(--on-dark-dim); display:flex; align-items:flex-end; justify-content:center; overflow:hidden; min-height:360px; }
+.recognition-art img{ width:78%; }
+
+/* ==========================================================================
+   Screen 08 — REGISTRATION (pilot enrollment)
+   ========================================================================== */
+.registration{ background:var(--paper-dim); }
+.enroll-steps{ display:grid; grid-template-columns:repeat(4,1fr); border:2px solid var(--carbon); }
+.enroll-step{ padding:28px 24px; border-left:2px solid var(--carbon); position:relative; }
+.enroll-step:first-child{ border-left:0; }
+.enroll-step .idx{ font-family:var(--font-mono); font-size:12px; color:var(--copper-dim); }
+.enroll-step h3{ font-family:var(--font-heading); font-size:18px; margin:10px 0 8px; }
+.enroll-step p{ font-size:13.5px; line-height:1.5; }
+.enroll-step:not(:last-child)::after{
+  content:'→'; position:absolute; right:-11px; top:50%; transform:translateY(-50%);
+  font-family:var(--font-mono); font-size:14px; color:var(--carbon); background:var(--paper-dim);
+  width:22px; text-align:center; z-index:2;
+}
+@media (max-width:900px){
+  .enroll-steps{ grid-template-columns:1fr 1fr; }
+  .enroll-step:nth-child(odd){ border-left:0; }
+  .enroll-step:nth-child(n+3){ border-top:2px solid var(--carbon); }
+  .enroll-step:not(:last-child)::after{ display:none; }
+}
+.registration-cta{ margin-top:40px; display:flex; align-items:center; gap:24px; flex-wrap:wrap; justify-content:space-between; border:2px solid var(--carbon); padding:32px; background:var(--paper); }
+.registration-cta .lede{ margin:0; max-width:44ch; }
+
+/* ==========================================================================
+   Screen 09 — RESOURCES (field manual / FAQ)
+   ========================================================================== */
+.resources{ background:var(--paper); }
+.faq-grid{ display:grid; grid-template-columns:1fr 1fr; border:2px solid var(--carbon); }
+.faq-col{ border-left:2px solid var(--carbon); }
+.faq-col:first-child{ border-left:0; }
+.faq{ padding:26px 28px; border-top:2px solid var(--carbon); }
+.faq:first-child{ border-top:0; }
+.faq h3{ font-family:var(--font-heading); font-size:16px; margin-bottom:8px; text-transform:none; }
+.faq p{ font-size:14px; line-height:1.6; }
+@media (max-width:800px){
+  .faq-grid{ grid-template-columns:1fr; }
+  .faq-col{ border-left:0; }
+}
+
+/* ==========================================================================
+   Screen 10 — DEMO DAY (closer)
+   ========================================================================== */
+.demoday{
+  background:var(--carbon); color:var(--paper);
+  text-align:center; position:relative; overflow:hidden;
+}
+.demoday .blueprint-grid.on-dark{ opacity:.35; }
+.demoday-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:24px; }
+.demoday .tag{ color:var(--cyan); justify-content:center; }
+.demoday .tag::before{ background:var(--cyan); }
+.demoday .h1{ color:var(--paper); }
+.demoday .lede{ color:var(--on-dark-dim); max-width:56ch; }
+.demoday-cta{ margin-top:16px; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer{ background:var(--surface); color:var(--on-dark); }
+.footer .wrap{
+  padding:36px var(--margin);
+  display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+}
+.footer-brand{ display:flex; align-items:center; gap:14px; }
+.footer-brand img{ height:20px; filter:brightness(0) invert(1); opacity:.9; }
+.footer-brand span{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+.footer-legal{ font-family:var(--font-mono); font-size:11px; text-align:right; max-width:560px; line-height:1.6; }
+@media (max-width:700px){ .footer-legal{ text-align:left; } }
+
+/* ---- utility: reveal-on-scroll for typewriter / draw-ins ---- */
+.type-target .type-cursor{
+  display:inline-block; width:8px; height:.85em; background:var(--cyan);
+  vertical-align:baseline; margin-left:2px;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+@media (prefers-reduced-motion:reduce){ .type-cursor{ animation:none; } }
