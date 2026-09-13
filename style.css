@@ -348,12 +348,12 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 }
 .hero-logo{ display:block; width:100%; height:auto; }
 .hero-copy .lede{
-  margin-bottom:32px;
+  margin-bottom:36px;
   font-size:19px;
   line-height:1.65;
   color:var(--carbon);
 }
-.hero-cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:40px; }
+.hero-cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:44px; }
 
 .hero-art{
   position:absolute;
@@ -458,8 +458,14 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
    Screen 02 — BEYOND CONTRIBUTING (editorial)
    ========================================================================== */
 .beyond{ background:var(--paper); }
-.beyond-inner{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; }
+.beyond-inner{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; align-items:start; }
 @media (max-width:1100px){ .beyond-inner{ grid-template-columns:1fr; gap:40px; } }
+
+.beyond-sticky{ position:sticky; top:104px; will-change:transform; }
+.beyond-sticky .sec-head{ margin-bottom:32px; }
+@media (max-width:1100px){
+  .beyond-sticky{ position:relative; top:auto; }
+}
 
 .beyond-figure{
   position:relative;
@@ -602,6 +608,9 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
    scroll jank on some GPUs/browsers (not reproducible in automated
    testing, but a safe, targeted fix for the known issue class). */
 .doc-index{ position:sticky; top:104px; border:2px solid var(--carbon); will-change:transform; }
+@media (max-width:900px){
+  .doc-index{ position:relative; top:auto; }
+}
 .doc-index a{
   display:block; padding:14px 18px; font-family:var(--font-mono); font-size:12px;
   letter-spacing:.06em; text-transform:uppercase; border-top:2px solid var(--carbon);
