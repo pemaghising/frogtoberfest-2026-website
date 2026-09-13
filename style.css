@@ -522,8 +522,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 }
 .tl-rail::before{
   content:'';
-  position:absolute; left:7px; top:8px; bottom:8px; width:2px;
-  background:var(--paper-dim);
+  position:absolute; left:7px; top:8px; bottom:8px; width:0;
   border-left:2px solid var(--carbon);
 }
 .tl-fill{
@@ -701,7 +700,13 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .enroll-steps{ display:grid; grid-template-columns:repeat(4,1fr); border:2px solid var(--carbon); }
 .enroll-step{ padding:28px 24px; border-left:2px solid var(--carbon); position:relative; }
 .enroll-step:first-child{ border-left:0; }
-.enroll-step .idx{ font-family:var(--font-mono); font-size:12px; color:var(--copper-dim); }
+.enroll-icon{
+  display:block;
+  color:var(--copper-dim);
+  margin-bottom:14px;
+}
+.enroll-icon svg{ width:26px; height:26px; }
+.enroll-step .idx{ display:block; margin-bottom:12px; font-family:var(--font-mono); font-size:12px; color:var(--copper-dim); }
 .enroll-step h3{ font-family:var(--font-heading); font-size:18px; margin:10px 0 8px; }
 .enroll-step p{ font-size:13.5px; line-height:1.5; }
 .enroll-step:not(:last-child)::after{
