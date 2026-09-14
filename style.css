@@ -371,7 +371,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   line-height:0;
   padding-top:96px;
 }
-.hero-art img{
+.hero-figure img{
   position:relative;
   z-index:2;
   display:block;
@@ -379,6 +379,52 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   height:auto;
   max-width:none;
 }
+
+/* Two clouds drift left-to-right at different speeds/scales for a
+   little parallax depth -- the back one tucks behind the mech (z-index
+   scoped inside .hero-art, so both still sit under .hero-copy's own
+   stacking context regardless), the front one passes over it. */
+.hero-cloud{
+  position:absolute;
+  pointer-events:none;
+  width:340px;
+  height:auto;
+}
+.hero-cloud-back{
+  top:42%;
+  left:0;
+  z-index:0;
+  width:180px;
+  animation:cloud-drift-back 75s linear infinite;
+}
+.hero-cloud-front{
+  top:68%;
+  left:0;
+  z-index:3;
+  width:220px;
+  animation:cloud-drift-front 50s linear infinite;
+}
+/* Opacity ramps in/out at each end of the drift instead of a hard
+   pop-in/out at the viewport edge. */
+@keyframes cloud-drift-back{
+  0%{ transform:translateX(28vw); opacity:0; }
+  15%{ opacity:.8; }
+  85%{ opacity:.8; }
+  100%{ transform:translateX(calc(100vw + 20%)); opacity:0; }
+}
+@keyframes cloud-drift-front{
+  0%{ transform:translateX(22vw); opacity:0; }
+  15%{ opacity:.92; }
+  85%{ opacity:.92; }
+  100%{ transform:translateX(calc(100vw + 20%)); opacity:0; }
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-cloud{ animation:none; transform:translateX(10%); }
+}
+@media (max-width:1100px){
+  .hero-cloud{ display:none; }
+}
+
 .hero-annot{
   position:absolute;
   z-index:3;
@@ -394,7 +440,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 @media (max-width:1100px){
   .hero-art{ position:relative; inset:auto; justify-content:center; align-items:center; margin-top:32px; }
   .hero-figure{ padding-top:0; }
-  .hero-art img{ width:100%; max-width:480px; }
+  .hero-figure img{ width:100%; max-width:480px; }
   .hero-annot{ display:none; }
 }
 
