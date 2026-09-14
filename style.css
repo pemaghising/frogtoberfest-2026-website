@@ -493,7 +493,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   display:block;
   position:absolute;
   z-index:1;
-  left:50%; bottom:-10px;
+  left:50%; bottom:2px;
   transform:translateX(-50%);
   width:114%;
   height:108%;
