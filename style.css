@@ -343,7 +343,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .hero-logo-crop{
   display:block;
   width:700px; max-width:100%;
-  aspect-ratio:736/342;
+  aspect-ratio:735/343;
   margin:0 0 24px;
 }
 .hero-logo{ display:block; width:100%; height:auto; }
