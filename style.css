@@ -19,6 +19,10 @@
   --green:        #8EBB81;   /* organic accent, sampled from the mech's armor plating */
   --green-dim:    #3E6136;   /* green for small text on paper — 5.8:1 AA */
   --green-light:  #B3DDA6;   /* green for small text on the surface color — 4.67:1 AA */
+  --leaf:         #67885A;   /* new secondary green accent — 3.28:1 on paper, large text/icons/borders only, not small text */
+  --leaf-dim:     #465C3D;   /* darkened for small text on paper — 6.0:1 AA */
+  --leaf-light:   #9EB894;   /* lightened for borders/icons on the surface color — 3.3:1, clears non-text contrast */
+  --copper-pale:  #DAA076;   /* copper lightened for large text on the surface color — 3.1:1 */
 
   --on-dark:      #F3EEE1;   /* text on the surface color */
   --on-dark-dim:  #A9BDB8;   /* borders/dividers on the surface color only — not text */
@@ -680,11 +684,13 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   .doc-index{ position:relative; top:auto; }
 }
 .doc-index a{
-  display:block; padding:14px 18px; font-family:var(--font-mono); font-size:12px;
+  display:block; padding:14px 18px 14px 16px; font-family:var(--font-mono); font-size:12px;
   letter-spacing:.06em; text-transform:uppercase; border-top:2px solid var(--carbon);
+  border-left:2px solid transparent;
+  transition:background-color .15s var(--ease), color .15s var(--ease), border-color .15s var(--ease);
 }
 .doc-index a:first-child{ border-top:0; }
-.doc-index a:hover{ background:var(--surface); color:var(--on-dark); }
+.doc-index a:hover{ background:var(--surface); color:var(--on-dark); border-left-color:var(--leaf-light); }
 
 .doc-block{ border:2px solid var(--carbon); margin-bottom:2px; }
 .doc-block-hdr{
@@ -707,7 +713,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .criterion{ padding:24px; border-top:2px solid var(--carbon); border-left:2px solid var(--carbon); }
 .criterion:nth-child(-n+3){ border-top:0; }
 .criterion:nth-child(3n+1){ border-left:0; }
-.criterion .num{ font-family:var(--font-mono); font-size:11px; color:var(--copper-dim); }
+.criterion .num{ font-family:var(--font-mono); font-size:11px; color:var(--leaf-dim); }
 .criterion h3{ font-family:var(--font-heading); font-size:16px; margin:8px 0 6px; }
 .criterion p{ font-size:13.5px; line-height:1.5; }
 @media (max-width:700px){
@@ -737,6 +743,10 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   position:absolute; left:24px; top:28px;
   font-family:var(--font-heading); font-size:28px; color:var(--cyan);
 }
+/* Three tiers, three primary colors -- brown/cyan/green together in the
+   site's single most visible rank-ordered moment. */
+.badge[data-rank="02"]::before{ color:var(--leaf-light); }
+.badge[data-rank="03"]::before{ color:var(--copper-pale); }
 .badge .corner{ position:absolute; width:14px; height:14px; border:2px solid var(--on-dark); }
 .badge .corner.tl{ top:-2px; left:-2px; border-right:0; border-bottom:0; }
 .badge .corner.br{ bottom:-2px; right:-2px; border-left:0; border-top:0; }
@@ -794,7 +804,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .enroll-step p{ font-size:13.5px; line-height:1.5; }
 .enroll-step:not(:last-child)::after{
   content:'→'; position:absolute; right:-13px; top:50%; transform:translateY(-50%);
-  font-family:var(--font-mono); font-size:22px; font-weight:600; color:var(--carbon); background:var(--paper-dim);
+  font-family:var(--font-mono); font-size:22px; font-weight:600; color:var(--leaf-dim); background:var(--paper-dim);
   width:26px; text-align:center; z-index:2;
 }
 @media (max-width:900px){
