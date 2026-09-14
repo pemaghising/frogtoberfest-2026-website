@@ -461,7 +461,12 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
 .beyond-inner{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; align-items:start; }
 @media (max-width:1100px){ .beyond-inner{ grid-template-columns:1fr; gap:40px; } }
 
-.beyond-sticky{ position:sticky; top:104px; will-change:transform; }
+/* No will-change:transform here: promoting this to its own compositing
+   layer is what was clipping the antennae/shoulders that intentionally
+   bleed past .beyond-figure's box -- some browsers clip a sticky
+   element's overflowing children to the promoted layer's own bounds
+   even with overflow:visible set. */
+.beyond-sticky{ position:sticky; top:104px; }
 .beyond-sticky .sec-head{ margin-bottom:64px; }
 @media (max-width:1100px){
   .beyond-sticky{ position:relative; top:auto; }
@@ -698,17 +703,31 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   padding:6px 14px;
 }
 
-.recognition-art{ position:relative; border:2px solid var(--on-dark-dim); overflow:hidden; min-height:360px; }
+/* clip-path (not overflow) does the clipping: negative top inset lets
+   the fist/head bleed past the top edge, while 0 on the other three
+   sides clips flush at the box -- so the image can never hang past
+   the bottom/sides and cross the border there. With the image capped
+   at the box edges, a normal border works again: it's part of the
+   box's own paint, so it naturally sits under the (child) image and
+   only shows through where the art doesn't cover it. */
+.recognition-art{
+  position:relative;
+  border:2px solid var(--on-dark-dim);
+  min-height:360px;
+  clip-path:inset(-240px 0 0 0);
+}
 /* Positioned out of flow so it doesn't contribute to .recognition-art's
    own size (a height:100% child inside a flex/grid box that's ALSO
    trying to auto-size off that child is circular, and falls back to the
    image's raw pixel dimensions). Out of flow, height:100% instead
    resolves cleanly against the grid-stretched (definite) parent height,
-   so the image always fills it exactly and its bottom always touches
-   the box's bottom -- regardless of which column is naturally taller. */
+   so the image's bottom always touches the box's bottom -- regardless
+   of which column is naturally taller. Sized slightly over 100% so the
+   fist/head bleed past the frame's top edge while the overall figure
+   stays the same size as before. */
 .recognition-art img{
   position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-  height:100%; width:auto; max-width:none;
+  height:134%; width:auto; max-width:none;
 }
 
 /* ==========================================================================
