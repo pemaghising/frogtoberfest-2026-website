@@ -8,8 +8,8 @@
 ## Running the App
 
 ```bash
-$ npm install
-$ npm start
+$ yarn
+$ yarn start
 ```
 
 Opens at [http://localhost:3000](http://localhost:3000).
@@ -17,7 +17,7 @@ Opens at [http://localhost:3000](http://localhost:3000).
 ## Building for Production
 
 ```bash
-$ npm run build
+$ yarn build
 ```
 
 Outputs a static bundle to `build/`.

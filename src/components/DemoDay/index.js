@@ -3,7 +3,7 @@ export default function DemoDay() {
     <section className="screen demoday screen-pad">
       <div className="blueprint-grid on-dark" aria-hidden="true"></div>
       <div className="wrap demoday-inner">
-        <p className="tag">Screen 08 &middot; Final Transmission</p>
+        <p className="tag">Screen 05 &middot; Final Transmission</p>
         <h2 className="h1">Demo Day</h2>
         <p className="lede lg">
           October 30, 2026 &middot; Kathmandu Valley.

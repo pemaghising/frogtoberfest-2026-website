@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import scanlineLeft from "../../assets/images/nav-scanline-left.svg";
 import scanlineRight from "../../assets/images/nav-scanline-right.svg";
+import logoLeapfrog from "../../assets/images/logo-leapfrog.png";
 
 const NAV_CODE = "AI‑FORGE‑2026";
 
@@ -54,7 +56,7 @@ export default function Nav() {
     <nav className="nav" style={{ backgroundImage: `url(${scanlineLeft}), url(${scanlineRight})` }}>
       <div className="wrap">
         <div className="nav-brand">
-          <img src="/img/logo-leapfrog.png" alt="Leapfrog Open Source" />
+          <img src={logoLeapfrog} alt="Leapfrog Open Source" />
           <span className="div" aria-hidden="true"></span>
           <span className="nav-code" ref={codeRef}>
             {NAV_CODE}
@@ -67,10 +69,10 @@ export default function Nav() {
             if (e.target.tagName === "A") setIsOpen(false);
           }}
         >
-          <a href="#beyond">Participation</a>
-          <a href="#timeline">Timeline</a>
-          <a href="#resources">FAQs</a>
-          <a href="#guidelines">Guidelines</a>
+          <Link to="/#beyond">Participation</Link>
+          <Link to="/#timeline">Timeline</Link>
+          <Link to="/#resources">FAQs</Link>
+          <Link to="/guidelines">Guidelines</Link>
         </div>
         <a className="btn btn-primary nav-cta" id="navCta" href="https://frog.ly/frogtoberfest-2026">
           <span className="chip" aria-hidden="true"></span> Register Now

@@ -1,4 +1,5 @@
 import Badge from "./components/Badge";
+import mechVictory from "../../assets/images/mech-victory-v2.png";
 
 export default function Recognition() {
   return (
@@ -6,7 +7,7 @@ export default function Recognition() {
       <div className="blueprint-grid on-dark" aria-hidden="true"></div>
       <div className="wrap recognition-inner">
         <div>
-          <p className="tag">Screen 05 &middot; Who Gets Celebrated</p>
+          <p className="tag">Screen 02 &middot; Who Gets Celebrated</p>
           <h2 className="h2" style={{ color: "var(--paper)", marginBottom: 32 }}>
             Recognition
           </h2>
@@ -27,7 +28,7 @@ export default function Recognition() {
 
         <div className="recognition-art">
           <picture>
-            <img src="/img/mech-victory-v2.png" alt="Frog Mecha, victory pose" loading="lazy" decoding="async" />
+            <img src={mechVictory} alt="Frog Mecha, victory pose" loading="lazy" decoding="async" />
           </picture>
         </div>
       </div>

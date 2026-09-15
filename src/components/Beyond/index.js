@@ -1,5 +1,6 @@
 import Statement from "./components/Statement";
 import Reason from "./components/Reason";
+import mechCrossed from "../../assets/images/mech-crossed-v2.png";
 
 export default function Beyond() {
   return (
@@ -9,7 +10,7 @@ export default function Beyond() {
           <div className="beyond-sticky">
             <div className="sec-head">
               <div>
-                <p className="tag">Screen 02 &middot; Why This Year Is Different</p>
+                <p className="tag">Screen 01 &middot; Why This Year Is Different</p>
                 <h2 className="h2">
                   Beyond
                   <br />
@@ -20,7 +21,7 @@ export default function Beyond() {
 
             <div className="beyond-figure">
               <picture>
-                <img src="/img/mech-crossed-v2.png" alt="Frog Mecha, arms crossed" loading="lazy" decoding="async" />
+                <img src={mechCrossed} alt="Frog Mecha, arms crossed" loading="lazy" decoding="async" />
               </picture>
             </div>
           </div>
