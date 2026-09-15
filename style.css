@@ -527,7 +527,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; text-transform:up
   background:var(--paper-dim);
   overflow:visible;
   width:90%;
-  height:420px;
+  aspect-ratio:3/2;
 }
 /* Frame sits behind the artwork, so it only shows where the figure
    doesn't cover it -- visible around the bleed, tucked under the
