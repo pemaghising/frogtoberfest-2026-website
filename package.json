@@ -1,0 +1,41 @@
+{
+  "name": "frogtoberfest-2026-website",
+  "version": "1.0.0",
+  "description": "Frogtoberfest 2026 — Agent Forge marketing site.",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint \"src/**/*.js\"",
+    "lint:fix": "eslint --fix \"src/**/*.js\"",
+    "prettier": "prettier --check \"src/**/*.{js,css,md,json}\"",
+    "prettier:fix": "prettier --write \"src/**/*.{js,css,md,json}\""
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-react-app": "^7.0.1",
+    "prettier": "^3.3.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,91 @@
+import { useEffect, useRef, useState } from "react";
+import scanlineLeft from "../../assets/images/nav-scanline-left.svg";
+import scanlineRight from "../../assets/images/nav-scanline-right.svg";
+
+const NAV_CODE = "AI‑FORGE‑2026";
+
+export default function Nav() {
+  const [isOpen, setIsOpen] = useState(false);
+  const codeRef = useRef(null);
+
+  useEffect(() => {
+    function onKeyDown(e) {
+      if (e.key === "Escape") setIsOpen(false);
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  /* ---- Terminal-cursor type-in for the nav HUD code label ---- */
+  useEffect(() => {
+    const el = codeRef.current;
+    if (!el) return undefined;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return undefined;
+
+    el.classList.add("type-target");
+    el.textContent = "";
+    const cursor = document.createElement("span");
+    cursor.className = "type-cursor";
+    el.appendChild(document.createTextNode(""));
+    el.appendChild(cursor);
+
+    let i = 0;
+    let interval;
+    const startTimer = setTimeout(() => {
+      interval = setInterval(() => {
+        if (i >= NAV_CODE.length) {
+          clearInterval(interval);
+          return;
+        }
+        cursor.insertAdjacentText("beforebegin", NAV_CODE[i]);
+        i++;
+      }, 45);
+    }, 300);
+
+    return () => {
+      clearTimeout(startTimer);
+      clearInterval(interval);
+      el.textContent = NAV_CODE;
+    };
+  }, []);
+
+  return (
+    <nav className="nav" style={{ backgroundImage: `url(${scanlineLeft}), url(${scanlineRight})` }}>
+      <div className="wrap">
+        <div className="nav-brand">
+          <img src="/img/logo-leapfrog.png" alt="Leapfrog Open Source" />
+          <span className="div" aria-hidden="true"></span>
+          <span className="nav-code" ref={codeRef}>
+            {NAV_CODE}
+          </span>
+        </div>
+        <div
+          className={`nav-links${isOpen ? " is-open" : ""}`}
+          id="navLinks"
+          onClick={(e) => {
+            if (e.target.tagName === "A") setIsOpen(false);
+          }}
+        >
+          <a href="#beyond">Participation</a>
+          <a href="#timeline">Timeline</a>
+          <a href="#resources">FAQs</a>
+          <a href="#guidelines">Guidelines</a>
+        </div>
+        <a className="btn btn-primary nav-cta" id="navCta" href="https://frog.ly/frogtoberfest-2026">
+          <span className="chip" aria-hidden="true"></span> Register Now
+        </a>
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-expanded={isOpen ? "true" : "false"}
+          aria-controls="navLinks"
+          onClick={() => setIsOpen((open) => !open)}
+        >
+          <span className="sr-only">Menu</span>
+          <span className="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+  );
+}
