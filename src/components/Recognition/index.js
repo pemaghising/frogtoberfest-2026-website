@@ -1,5 +1,5 @@
 import Badge from "./components/Badge";
-import mechVictory from "../../assets/images/mech-victory-v2.png";
+import mechVictory from "../../assets/images/mech-victory-v3.png";
 
 export default function Recognition() {
   return (

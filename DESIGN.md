@@ -15,6 +15,10 @@ colors:
   green: "#8EBB81"
   green-dim: "#3E6136"
   green-light: "#B3DDA6"
+  leaf: "#67885A"
+  leaf-dim: "#465C3D"
+  leaf-light: "#9EB894"
+  copper-pale: "#DAA076"
   on-dark: "#F3EEE1"
   on-dark-dim: "#A9BDB8"
 typography:
@@ -139,6 +143,8 @@ The palette is a warm, desaturated "engineering paper" base with two disciplined
 ### Secondary
 - **Field Copper** (`#B96A32` / dim `#8C5027` / light `#D1893F`): Mechanical accent family, sampled from the mech's armor trim. `copper` is decorative/large-scale only (icons, large glyphs); `copper-dim` is the text-safe variant that clears AA contrast on paper; `copper-light` is the background variant for dark text on top.
 - **Organic Green** (`#8EBB81` / dim `#3E6136` / light `#B3DDA6`): Sampled from the mech's armor plating, used for supporting numbered labels and secondary status marks where copper would be too warm.
+- **Leaf** (`#67885A` / dim `#465C3D` / light `#9EB894`): A third, deliberately distinct green accent — muted/olive rather than the sage-toned Organic Green above. `leaf` (raw) is large-text/icon/border use only (3.28:1 on paper); `leaf-dim` clears AA for small text on paper (6.0:1); `leaf-light` is the on-`surface` variant (3.3:1). Introduced to give brown/cyan/green equal visual weight as the system's three primary colors — see the Recognition badges, where all three sit side by side.
+- **Copper Pale** (`#DAA076`): Copper lightened for large-text use on the `surface` color (3.1:1) — the on-dark counterpart to `copper`/`copper-dim`, which are both too low-contrast against `surface` to use directly.
 
 ### Neutral
 - **Engineering Paper** (`#EFE8DA`): Primary page background — warm, not stark white.

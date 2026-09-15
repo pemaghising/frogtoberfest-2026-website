@@ -58,14 +58,17 @@ export default function Timeline() {
   return (
     <section className="screen timeline screen-pad" id="timeline">
       <div className="wrap">
-        <div className="registration-cta" style={{ marginTop: 0, marginBottom: 56 }}>
-          <p className="lede">
-            Navigate your way through the challenge. Check out the{" "}
-            <Link to="/guidelines" style={{ textDecoration: "underline" }}>
-              guidelines
-            </Link>{" "}
-            page.
-          </p>
+        <div className="callout" style={{ marginBottom: 56 }}>
+          <div className="callout-hdr">
+            <span className="chip" aria-hidden="true"></span>
+            Field Note
+          </div>
+          <div className="callout-body">
+            <p className="lede">Navigate your way through the challenge.</p>
+            <Link className="btn btn-outline" to="/guidelines">
+              View Guidelines <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
         </div>
 
         <div className="sec-head">

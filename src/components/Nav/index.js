@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import scanlineLeft from "../../assets/images/nav-scanline-left.svg";
 import scanlineRight from "../../assets/images/nav-scanline-right.svg";
 import logoLeapfrog from "../../assets/images/logo-leapfrog.png";
@@ -9,6 +9,7 @@ const NAV_CODE = "AI‑FORGE‑2026";
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const codeRef = useRef(null);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     function onKeyDown(e) {
@@ -55,13 +56,22 @@ export default function Nav() {
   return (
     <nav className="nav" style={{ backgroundImage: `url(${scanlineLeft}), url(${scanlineRight})` }}>
       <div className="wrap">
-        <div className="nav-brand">
+        <Link
+          to="/"
+          className="nav-brand"
+          onClick={(e) => {
+            if (pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+        >
           <img src={logoLeapfrog} alt="Leapfrog Open Source" />
           <span className="div" aria-hidden="true"></span>
           <span className="nav-code" ref={codeRef}>
             {NAV_CODE}
           </span>
-        </div>
+        </Link>
         <div
           className={`nav-links${isOpen ? " is-open" : ""}`}
           id="navLinks"
